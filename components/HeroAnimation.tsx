@@ -163,12 +163,15 @@ export default function HeroAnimation() {
               />
               <div className="absolute top-0 left-0 right-0 h-[160px] bg-gradient-to-b from-[#4F84F6]/10 to-transparent pointer-events-none" />
 
-              <div className="flex-shrink-0 relative z-10">
+              <motion.div 
+                animate={{ opacity: (step === 6 || step === 7) ? 0 : 1 }}
+                className="flex-shrink-0 relative z-10"
+              >
                 <h3 className="text-4xl font-extrabold text-white mb-2.5 tracking-wide">Planly</h3>
                 <p className="text-white/90 text-[16px] leading-relaxed max-w-[95%] font-semibold">
                   Know exactly what you have to do each day. Planned.
                 </p>
-              </div>
+              </motion.div>
             </motion.div>
 
             {/* Layer 1: Inner Card 1 (Progress) */}
