@@ -147,8 +147,8 @@ export default function HeroAnimation() {
           {/* FRONT FACE (Planly UI) */}
           {/* ======================= */}
           <motion.div 
-            initial={{ visibility: "visible" }}
-            animate={{ visibility: step === 6 ? "hidden" : "visible" }}
+            initial={{ visibility: "visible", z: 1 }}
+            animate={{ visibility: step === 6 ? "hidden" : "visible", z: 1 }}
             transition={{ duration: 0 }}
             className="absolute inset-0 w-full h-full" 
             style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", transformStyle: "preserve-3d", WebkitTransformStyle: "preserve-3d" }}
@@ -168,7 +168,7 @@ export default function HeroAnimation() {
 
               <motion.div 
                 animate={{ opacity: (step === 6 || step === 7) ? 0 : 1 }}
-                className="flex-shrink-0 relative z-10"
+                className="flex-shrink-0"
               >
                 <h3 className="text-4xl font-extrabold text-white mb-2.5 tracking-wide">Planly</h3>
                 <p className="text-white/90 text-[16px] leading-relaxed max-w-[95%] font-semibold">
@@ -278,8 +278,8 @@ export default function HeroAnimation() {
           {/* BACK FACE (TUFY UI) */}
           {/* ======================= */}
           <motion.div 
-            initial={{ rotateY: 180, visibility: "hidden" }}
-            animate={{ visibility: (step >= 5) ? "visible" : "hidden" }}
+            initial={{ rotateY: 180, visibility: "hidden", z: 1 }}
+            animate={{ visibility: (step >= 5) ? "visible" : "hidden", z: 1 }}
             transition={{ duration: 0 }}
             className="absolute inset-0 w-full h-full" 
             style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", transformStyle: "preserve-3d", WebkitTransformStyle: "preserve-3d" }}
@@ -291,7 +291,7 @@ export default function HeroAnimation() {
             {/* Inner Content (Safely padded, no global overflow-hidden so the mascot can pop out) */}
             <div className="relative w-full h-full p-9 flex flex-col">
               
-              <div className="relative z-10 flex-shrink-0">
+              <div className="flex-shrink-0">
                 <h3 className="text-3xl font-extrabold text-white mb-2 tracking-wide">TUFY to help you</h3>
                 <p className="text-white/60 text-[15px] leading-relaxed max-w-[95%]">
                   Built into every surface — lessons, practice, submissions and reviews.
