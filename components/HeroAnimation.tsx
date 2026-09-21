@@ -310,14 +310,14 @@ export default function HeroAnimation() {
                 {/* The Unrolling Canvas */}
                 <motion.div
                   initial={{ clipPath: "inset(0% 0% 100% 0%)" }}
-                  animate={{ clipPath: step === 6 ? "inset(0% 0% 0% 0%)" : "inset(0% 0% 100% 0%)" }}
+                  animate={{ clipPath: (step === 6 || step === 7) ? "inset(0% 0% 0% 0%)" : "inset(0% 0% 100% 0%)" }}
                   transition={{ duration: 1.0, delay: step === 6 ? 0.2 : 0, ease: [0.25, 1, 0.5, 1] }}
                   className="absolute top-[39px] left-4 right-4 bottom-4 bg-gradient-to-b from-[#1C2128] to-[#12161E] rounded-b-[12px] shadow-[0_10px_20px_rgba(0,0,0,0.5)] z-20 flex flex-col items-center justify-end pb-4"
                 >
                   {/* Floating Search/Stats Bar */}
                   <motion.div
                     initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: step === 6 ? 1 : 0, y: step === 6 ? 0 : 30 }}
+                    animate={{ opacity: (step === 6 || step === 7) ? 1 : 0, y: (step === 6 || step === 7) ? 0 : 30 }}
                     transition={{ duration: 0.6, delay: step === 6 ? 0.9 : 0, ease: [0.16, 1, 0.3, 1] }}
                     className="w-[90%] h-12 bg-[#0B0E14] border border-white/10 rounded-full flex items-center justify-between px-4 shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
                   >
@@ -349,9 +349,9 @@ export default function HeroAnimation() {
             <motion.div
               initial={{ opacity: 0, y: 60, scale: 0.8 }}
               animate={{ 
-                opacity: step === 6 ? 1 : 0, 
-                y: step === 6 ? 0 : 60, 
-                scale: step === 6 ? 1 : 0.8 
+                opacity: (step === 6 || step === 7) ? 1 : 0, 
+                y: (step === 6 || step === 7) ? 0 : 60, 
+                scale: (step === 6 || step === 7) ? 1 : 0.8 
               }}
               transition={{ type: "spring", stiffness: 100, damping: 15, delay: step === 6 ? 0.6 : 0 }}
               className="absolute -bottom-6 -right-6 w-[170px] h-[170px] z-50 pointer-events-none"
