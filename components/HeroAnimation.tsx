@@ -384,7 +384,13 @@ export default function HeroAnimation() {
               className="absolute -bottom-3 -right-4 w-[135px] h-[135px] z-50 pointer-events-none"
             >
               {/* Using the newly uploaded laptop mascot */}
-              <img src="/tufy-laptop.png" alt="TUFY Mascot" className="w-full h-full object-contain drop-shadow-2xl" />
+              <motion.img 
+                src="/tufy-laptop.png" 
+                alt="TUFY Mascot" 
+                className="w-full h-full object-contain drop-shadow-2xl origin-bottom" 
+                animate={{ y: [0, -3, 0] }}
+                transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+              />
             </motion.div>
 
           </motion.div>
