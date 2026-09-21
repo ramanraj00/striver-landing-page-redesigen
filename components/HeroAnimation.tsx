@@ -7,7 +7,7 @@ import { BookOpen, Clock, Calendar, BarChart2, CheckCircle2, ArrowRight, Search,
 const Row = ({ icon, label, value, step, delay }: { icon: React.ReactNode, label: string, value: string, step: number, delay: number }) => (
   <motion.div 
     initial={{ opacity: 0, y: 10 }}
-    animate={{ opacity: step >= 1 && step < 5 ? 1 : 0, y: step >= 1 && step < 5 ? 0 : 10 }}
+    animate={{ opacity: step >= 1 ? 1 : 0, y: step >= 1 ? 0 : 10 }}
     transition={{ duration: 0.4, delay: step >= 1 ? delay : 0, ease: "easeOut" }}
     style={{ willChange: "transform, opacity", backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
     className="flex items-center justify-between text-[14px]"
@@ -27,7 +27,7 @@ const TaskRow = ({ label, time, shouldStrike, strikeDelay, step, delay }: { labe
   return (
     <motion.div 
       initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: step >= 3 && step < 5 ? 1 : 0, y: step >= 3 && step < 5 ? 0 : 10 }}
+      animate={{ opacity: step >= 3 ? 1 : 0, y: step >= 3 ? 0 : 10 }}
       transition={{ duration: 0.4, delay: step >= 3 ? delay : 0, ease: "easeOut" }}
       style={{ willChange: "transform, opacity", backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
       className="flex justify-between items-center group"
@@ -94,7 +94,7 @@ export default function HeroAnimation() {
         await new Promise((r) => setTimeout(r, 1000));
         if (!isMounted) break;
         setStep(4); // Task strike
-        await new Promise((r) => setTimeout(r, 800)); // Admire tasks briefly (was 2500)
+        await new Promise((r) => setTimeout(r, 3500)); // Wait for all 3 tasks to strike (~1.4s) + 2 full seconds of pause
         if (!isMounted) break;
         setStep(5); // Luxurious Flip
         await new Promise((r) => setTimeout(r, 1500));
@@ -116,7 +116,7 @@ export default function HeroAnimation() {
       
       {/* 3D Isometric Camera Container (Stays Static, holds the camera angle) */}
       <motion.div
-        style={{ transformStyle: "preserve-3d" }}
+        style={{ transformStyle: "preserve-3d", WebkitTransformStyle: "preserve-3d" }}
         initial={{ rotateX: 20, rotateY: -20, rotateZ: 5 }}
         animate={{ rotateX: 20, rotateY: -20, rotateZ: 5 }}
         className="relative w-[460px] h-[470px]"
@@ -125,7 +125,7 @@ export default function HeroAnimation() {
         {/* The Flipper Container (Spins perfectly inside the 3D space) */}
         <motion.div
           className="absolute inset-0 w-full h-full"
-          style={{ transformStyle: "preserve-3d" }}
+          style={{ transformStyle: "preserve-3d", WebkitTransformStyle: "preserve-3d" }}
           initial={{ rotateY: 0 }}
           animate={{
             rotateY: step >= 5 ? 180 : 0,
@@ -141,7 +141,10 @@ export default function HeroAnimation() {
           {/* ======================= */}
           {/* FRONT FACE (Planly UI) */}
           {/* ======================= */}
-          <div className="absolute inset-0 w-full h-full" style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", transformStyle: "preserve-3d" }}>
+          <motion.div 
+            className="absolute inset-0 w-full h-full" 
+            style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", transformStyle: "preserve-3d", WebkitTransformStyle: "preserve-3d" }}
+          >
             {/* Layer 0: Base Shell */}
             <motion.div
               initial={{ z: 0 }}
@@ -171,7 +174,7 @@ export default function HeroAnimation() {
                 y: step >= 3 ? 0 : (step >= 1 ? 0 : 10), 
                 x: step >= 3 ? 12 : 0,
                 height: step >= 3 ? 280 : 300, 
-                opacity: step >= 1 && step < 5 ? 1 : 0,
+                opacity: step >= 1 ? 1 : 0,
                 scale: 1
               }}
               transition={smoothTransition}
@@ -180,7 +183,7 @@ export default function HeroAnimation() {
             >
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: step >= 1 && step < 5 ? 1 : 0, y: step >= 1 && step < 5 ? 0 : 10 }}
+                animate={{ opacity: step >= 1 ? 1 : 0, y: step >= 1 ? 0 : 10 }}
                 transition={{ duration: 0.4, delay: step >= 1 ? 0.3 : 0, ease: "easeOut" }}
                 style={{ willChange: "transform, opacity", backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
                 className="inline-flex px-4 py-1.5 bg-white/10 border border-white/10 rounded-md text-xs font-bold text-white mb-6 w-max shadow-sm"
@@ -194,7 +197,7 @@ export default function HeroAnimation() {
                 
                 <motion.div 
                   initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: step >= 1 && step < 5 ? 1 : 0, y: step >= 1 && step < 5 ? 0 : 10 }}
+                  animate={{ opacity: step >= 1 ? 1 : 0, y: step >= 1 ? 0 : 10 }}
                   transition={{ duration: 0.4, delay: step >= 1 ? 0.7 : 0, ease: "easeOut" }}
                   style={{ willChange: "transform, opacity", backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
                   className="flex items-center justify-between text-[14px] pt-4"
@@ -225,7 +228,7 @@ export default function HeroAnimation() {
               animate={{ 
                 z: 60, 
                 y: step >= 3 ? 0 : 10, 
-                opacity: step >= 3 && step < 5 ? 1 : 0,
+                opacity: step >= 3 ? 1 : 0,
                 x: 0,
                 scale: 1
               }}
@@ -235,7 +238,7 @@ export default function HeroAnimation() {
             >
               <motion.div 
                 initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: step >= 3 && step < 5 ? 1 : 0, y: step >= 3 && step < 5 ? 0 : 10 }}
+                animate={{ opacity: step >= 3 ? 1 : 0, y: step >= 3 ? 0 : 10 }}
                 transition={{ duration: 0.4, delay: step >= 3 ? 0.3 : 0, ease: "easeOut" }}
                 style={{ willChange: "transform, opacity", backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
                 className="flex justify-between items-center mb-6"
@@ -258,12 +261,16 @@ export default function HeroAnimation() {
                 <TaskRow label="Graph BFS practice" time="35 min" shouldStrike={false} step={step} delay={0.7} />
               </div>
             </motion.div>
-          </div>
+          </motion.div>
 
           {/* ======================= */}
           {/* BACK FACE (TUFY UI) */}
           {/* ======================= */}
-          <div className="absolute inset-0 w-full h-full" style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", transform: "rotateY(180deg)", transformStyle: "preserve-3d" }}>
+          <motion.div 
+            initial={{ rotateY: 180 }}
+            className="absolute inset-0 w-full h-full" 
+            style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", transformStyle: "preserve-3d", WebkitTransformStyle: "preserve-3d" }}
+          >
             
             {/* Base Background with mathematically inverted shadow so it casts left relative to the scene after rotating */}
             <div className="absolute inset-0 bg-[#0B0E14] rounded-[40px] border-[1.5px] border-white/10 shadow-[15px_25px_50px_rgba(0,0,0,0.8)]" />
@@ -334,7 +341,7 @@ export default function HeroAnimation() {
               <img src="/tufy.png" alt="TUFY Mascot" className="w-full h-full object-contain drop-shadow-2xl" />
             </motion.div>
 
-          </div>
+          </motion.div>
         </motion.div>
       </motion.div>
     </div>
