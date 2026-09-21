@@ -1,59 +1,70 @@
 "use client";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { BookOpen, Clock, Calendar, BarChart2, CheckCircle2, ArrowRight } from "lucide-react";
 
+// Highly optimized Row component using hardware acceleration
 const Row = ({ icon, label, value, step, delay }: { icon: React.ReactNode, label: string, value: string, step: number, delay: number }) => (
   <motion.div 
     initial={{ opacity: 0, y: 10 }}
     animate={{ opacity: step >= 1 ? 1 : 0, y: step >= 1 ? 0 : 10 }}
     transition={{ duration: 0.4, delay: step >= 1 ? delay : 0, ease: "easeOut" }}
-    className="flex items-center justify-between text-[15px] py-1.5"
+    style={{ willChange: "transform, opacity", backfaceVisibility: "hidden" }}
+    className="flex items-center justify-between text-[14px]"
   >
     <div className="flex items-center gap-5 text-white/80">
-      <div className="w-[18px] h-[18px] text-white/50">{icon}</div>
+      <div className="text-white/50 w-[18px] h-[18px]">{icon}</div>
       <span className="font-semibold tracking-wide">{label}</span>
     </div>
     <span className="text-white font-bold tracking-wide">{value}</span>
   </motion.div>
 );
 
-const TaskRow = ({ label, time, shouldStrike = false, strikeDelay = 0, step = 0, delay = 0 }: { label: string, time: string, shouldStrike?: boolean, strikeDelay?: number, step?: number, delay?: number }) => {
-  const isCompletePhase = shouldStrike && step >= 4;
+// Highly optimized TaskRow with scaleX instead of width for strikethrough
+const TaskRow = ({ label, time, shouldStrike, strikeDelay, step, delay }: { label: string, time: string, shouldStrike: boolean, strikeDelay?: number, step: number, delay: number }) => {
+  const isCompletePhase = step >= 4 && shouldStrike;
   
   return (
     <motion.div 
-      initial={{ opacity: 0, x: -10 }}
-      animate={{ opacity: step >= 3 ? 1 : 0, x: step >= 3 ? 0 : -10 }}
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: step >= 3 ? 1 : 0, y: step >= 3 ? 0 : 10 }}
       transition={{ duration: 0.4, delay: step >= 3 ? delay : 0, ease: "easeOut" }}
-      className="flex items-center justify-between relative group py-0.5"
+      style={{ willChange: "transform, opacity", backfaceVisibility: "hidden" }}
+      className="flex justify-between items-center group"
     >
-      <div className="flex items-center gap-5">
+      <div className="flex items-center gap-4">
         <motion.div
-          animate={{ color: isCompletePhase ? "#60A5FA" : "rgba(255,255,255,0.5)" }}
-          transition={{ duration: 0.3, delay: isCompletePhase ? strikeDelay : 0 }}
+          animate={{
+            backgroundColor: isCompletePhase ? "rgba(59, 130, 246, 1)" : "rgba(255, 255, 255, 0.1)",
+            borderColor: isCompletePhase ? "rgba(59, 130, 246, 1)" : "rgba(255, 255, 255, 0.2)"
+          }}
+          transition={{ duration: 0.2, delay: isCompletePhase ? strikeDelay : 0 }}
+          className="w-5 h-5 rounded-full border flex items-center justify-center transition-colors"
         >
-          <CheckCircle2 className="w-[18px] h-[18px] fill-current opacity-90" />
+          <CheckCircle2 className={`w-3.5 h-3.5 text-white transition-opacity duration-300 ${isCompletePhase ? "opacity-100" : "opacity-0"}`} />
         </motion.div>
-        <motion.span
-          animate={{ color: isCompletePhase ? "rgba(255,255,255,0.4)" : "rgba(255,255,255,0.95)" }}
-          transition={{ duration: 0.3, delay: isCompletePhase ? strikeDelay : 0 }}
-          className="text-[15px] font-semibold relative tracking-wide"
-        >
-          {label}
-          {/* Strikethrough line */}
+        
+        <div className="relative">
+          <motion.span 
+            animate={{ color: isCompletePhase ? "rgba(255,255,255,0.4)" : "rgba(255,255,255,0.9)" }}
+            transition={{ duration: 0.3, delay: isCompletePhase ? strikeDelay : 0 }}
+            className="text-[15px] font-bold tracking-wide block"
+          >
+            {label}
+          </motion.span>
           {shouldStrike && (
             <motion.div
-              className="absolute left-0 top-1/2 w-full h-[1.5px] bg-white/40 -translate-y-1/2 origin-left"
+              style={{ originX: 0, backfaceVisibility: "hidden" }}
               initial={{ scaleX: 0 }}
               animate={{ scaleX: isCompletePhase ? 1 : 0 }}
-              transition={{ duration: 0.4, ease: "easeOut", delay: isCompletePhase ? strikeDelay : 0 }}
+              transition={{ duration: 0.4, delay: isCompletePhase ? strikeDelay : 0, ease: "easeInOut" }}
+              className="absolute top-1/2 left-0 w-full h-[2px] bg-white/40 -translate-y-1/2"
             />
           )}
-        </motion.span>
+        </div>
       </div>
-      <motion.span
-        animate={{ color: isCompletePhase ? "rgba(255,255,255,0.3)" : "rgba(255,255,255,0.7)" }}
+      <motion.span 
+        animate={{ color: isCompletePhase ? "rgba(255,255,255,0.4)" : "rgba(255,255,255,0.9)" }}
         transition={{ duration: 0.3, delay: isCompletePhase ? strikeDelay : 0 }}
         className="text-[14px] font-bold tracking-wide"
       >
@@ -92,24 +103,14 @@ export default function HeroAnimation() {
     };
   }, []);
 
-  const springConfig = { type: "spring", stiffness: 70, damping: 14 };
   const smoothTransition = { duration: 0.8, ease: [0.16, 1, 0.3, 1] };
 
   return (
     <div className="relative w-full h-[600px] flex items-center justify-center -translate-y-6 antialiased" style={{ perspective: "1500px" }}>
       
-      {/* Blueprint Grid Background */}
-      <div 
-        className="absolute inset-0 opacity-20 pointer-events-none [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_70%)]"
-        style={{
-          backgroundImage: "radial-gradient(circle, #ffffff 1px, transparent 1px)",
-          backgroundSize: "24px 24px"
-        }}
-      />
-
       {/* 3D Isometric Scene (Static Forward-Facing Tilt) */}
       <motion.div
-        style={{ transformStyle: "preserve-3d" }}
+        style={{ transformStyle: "preserve-3d", backfaceVisibility: "hidden" }}
         initial={{ rotateX: 20, rotateY: -20, rotateZ: 5 }}
         animate={{ rotateX: 20, rotateY: -20, rotateZ: 5 }}
         className="relative w-[460px] h-[470px]"
@@ -118,15 +119,19 @@ export default function HeroAnimation() {
         {/* Layer 0: Base Shell */}
         <motion.div
           initial={{ z: 0 }}
+          style={{ backfaceVisibility: "hidden" }}
           className="absolute inset-0 bg-[#0B0E14] rounded-[40px] p-9 border-[1.5px] border-white/10 shadow-[-15px_25px_50px_rgba(0,0,0,0.8)] flex flex-col overflow-hidden"
         >
-          {/* Blue Highlight Glow for the header area */}
-          <div className="absolute -top-20 -left-10 w-[350px] h-[300px] bg-blue-600/20 blur-[80px] rounded-full pointer-events-none" />
+          {/* ZERO-COST Radial Gradient Glow (Replaced expensive blur-3xl) */}
+          <div 
+            className="absolute -top-20 -left-10 w-[350px] h-[300px] rounded-full pointer-events-none" 
+            style={{ background: "radial-gradient(circle, rgba(37,99,235,0.2) 0%, rgba(37,99,235,0) 70%)" }}
+          />
           <div className="absolute top-0 left-0 right-0 h-[160px] bg-gradient-to-b from-[#4F84F6]/10 to-transparent pointer-events-none" />
 
           <div className="flex-shrink-0 relative z-10">
-            <h3 className="text-4xl font-extrabold text-white mb-2.5 tracking-wide drop-shadow-lg">Planly</h3>
-            <p className="text-white/90 text-[16px] leading-relaxed max-w-[95%] font-semibold drop-shadow-md">
+            <h3 className="text-4xl font-extrabold text-white mb-2.5 tracking-wide">Planly</h3>
+            <p className="text-white/90 text-[16px] leading-relaxed max-w-[95%] font-semibold">
               Know exactly what you have to do each day. Planned.
             </p>
           </div>
@@ -137,20 +142,22 @@ export default function HeroAnimation() {
           initial={{ z: 0, y: 10, opacity: 0, x: 0, scale: 0.9, height: 300 }}
           animate={{ 
             z: step >= 3 ? 30 : (step >= 1 ? 40 : 0), 
-            y: step >= 3 ? 0 : (step >= 1 ? 0 : 10),
+            y: step >= 3 ? 0 : (step >= 1 ? 0 : 10), // Reverted to 0 to keep bottom flush
             x: step >= 3 ? 12 : 0,
-            height: step >= 3 ? 280 : 300,
+            height: step >= 3 ? 280 : 300, // Using height so it shrinks from top down
             opacity: step >= 1 ? 1 : 0,
             scale: 1
           }}
           transition={smoothTransition}
+          style={{ willChange: "transform, height, opacity", backfaceVisibility: "hidden" }}
           className="absolute left-12 right-5 bottom-0 bg-gradient-to-br from-[#192030] to-[#121622] rounded-[30px] p-8 border border-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),-10px_20px_40px_rgba(0,0,0,0.6)] flex flex-col overflow-hidden"
         >
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: step >= 1 ? 1 : 0, y: step >= 1 ? 0 : 10 }}
             transition={{ duration: 0.4, delay: step >= 1 ? 0.3 : 0, ease: "easeOut" }}
-            className="inline-flex px-4 py-1.5 bg-white/10 border border-white/10 rounded-md text-xs font-bold text-white mb-6 w-max shadow-sm backdrop-blur-sm"
+            style={{ willChange: "transform, opacity", backfaceVisibility: "hidden" }}
+            className="inline-flex px-4 py-1.5 bg-white/10 border border-white/10 rounded-md text-xs font-bold text-white mb-6 w-max shadow-sm"
           >
             Progress
           </motion.div>
@@ -163,6 +170,7 @@ export default function HeroAnimation() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: step >= 1 ? 1 : 0, y: step >= 1 ? 0 : 10 }}
               transition={{ duration: 0.4, delay: step >= 1 ? 0.7 : 0, ease: "easeOut" }}
+              style={{ willChange: "transform, opacity", backfaceVisibility: "hidden" }}
               className="flex items-center justify-between text-[14px] pt-4"
             >
               <div className="flex items-center gap-5 text-white/80">
@@ -171,15 +179,14 @@ export default function HeroAnimation() {
               </div>
               <div className="flex items-center gap-5">
                 <div className="w-20 h-[6px] bg-black/40 shadow-inner rounded-full overflow-hidden relative">
+                  {/* Replaced width animation with scaleX for zero layout thrashing */}
                   <motion.div
-                    className="h-full bg-gradient-to-r from-blue-500 to-blue-300 rounded-full relative"
-                    initial={{ width: "0%" }}
-                    animate={{ width: step >= 2 ? "38%" : "0%" }}
-                    transition={springConfig}
-                  >
-                    {/* Glowing tip on the progress bar */}
-                    <div className="absolute right-0 top-0 bottom-0 w-3 bg-white/60 blur-[1px] rounded-r-full" />
-                  </motion.div>
+                    className="absolute inset-y-0 left-0 bg-gradient-to-r from-blue-500 to-blue-300 rounded-full w-full"
+                    style={{ originX: 0, willChange: "transform" }}
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: step >= 2 ? 0.38 : 0 }}
+                    transition={{ type: "spring", stiffness: 70, damping: 14 }}
+                  />
                 </div>
                 <span className="text-white font-extrabold text-[14px]">38 %</span>
               </div>
@@ -198,16 +205,18 @@ export default function HeroAnimation() {
             scale: 1
           }}
           transition={smoothTransition}
+          style={{ willChange: "transform, opacity", backfaceVisibility: "hidden" }}
           className="absolute left-12 right-5 bottom-0 h-[300px] bg-gradient-to-br from-[#1F273A] to-[#161B2B] rounded-[30px] p-8 border border-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),-15px_30px_50px_rgba(0,0,0,0.7)]"
         >
           <motion.div 
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: step >= 3 ? 1 : 0, y: step >= 3 ? 0 : 10 }}
             transition={{ duration: 0.4, delay: step >= 3 ? 0.3 : 0, ease: "easeOut" }}
+            style={{ willChange: "transform, opacity", backfaceVisibility: "hidden" }}
             className="flex justify-between items-center mb-6"
           >
             <div className="flex items-center gap-4">
-              <span className="px-4 py-1.5 bg-white/10 border border-white/10 rounded-md text-xs font-bold text-white shadow-sm backdrop-blur-sm">
+              <span className="px-4 py-1.5 bg-white/10 border border-white/10 rounded-md text-xs font-bold text-white shadow-sm">
                 Today's task
               </span>
               <span className="text-xs text-white/70 font-bold">1 / 10</span>
