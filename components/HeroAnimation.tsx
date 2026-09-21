@@ -328,13 +328,12 @@ export default function HeroAnimation() {
                 
                 {/* SLIDE 1: Roller IDE */}
                 <motion.div
-                  initial={{ x: "0%" }}
+                  initial={{ x: 0 }}
                   animate={{ 
-                    x: (step === 7 || step === 8) ? "-100%" : "0%"
+                    x: (step === 7 || step === 8) ? -400 : 0
                   }}
                   transition={{ duration: step === 0 ? 0 : 0.8, ease: [0.32, 0.72, 0, 1] }}
                   className="absolute inset-0 w-full h-full bg-[#080A0F] border-[1.5px] border-white/10 overflow-hidden flex flex-col rounded-[16px]"
-                  style={{ willChange: "transform" }}
                 >
                   {/* IDE Top Bar (Fixed at top) */}
                   <div className="relative w-full h-8 border-b border-white/5 flex items-center px-4 gap-1.5 bg-white/[0.02] z-40">
@@ -389,13 +388,12 @@ export default function HeroAnimation() {
 
                 {/* SLIDE 2: Code Editor */}
                 <motion.div
-                  initial={{ x: "100%" }}
+                  initial={{ x: 400 }}
                   animate={{ 
-                    x: (step === 7 || step === 8) ? "0%" : "100%"
+                    x: (step === 7 || step === 8) ? 0 : 400
                   }}
                   transition={{ duration: step === 0 ? 0 : 0.8, ease: [0.32, 0.72, 0, 1] }}
                   className="absolute inset-0 w-full h-full bg-[#0A0D14] border-[1.5px] border-white/10 overflow-hidden flex flex-col rounded-[16px] shadow-[inset_0_10px_20px_rgba(0,0,0,0.4)]"
-                  style={{ willChange: "transform" }}
                 >
                   {/* IDE Top Bar (Tabs) */}
                   <div className="relative w-full h-8 border-b border-white/5 flex items-end px-2 bg-[#06080A]">
