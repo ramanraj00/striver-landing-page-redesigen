@@ -76,12 +76,14 @@ const TaskRow = ({ label, time, shouldStrike, strikeDelay, step, delay }: { labe
 
 export default function HeroAnimation() {
   const [step, setStep] = useState(0);
+  const [tickCount, setTickCount] = useState(0);
 
   useEffect(() => {
     let isMounted = true;
     const runSequence = async () => {
       while (isMounted) {
         setStep(0);
+        setTickCount(0);
         await new Promise((r) => setTimeout(r, 800));
         if (!isMounted) break;
         setStep(1); // Card 1 up
@@ -94,7 +96,14 @@ export default function HeroAnimation() {
         await new Promise((r) => setTimeout(r, 1000));
         if (!isMounted) break;
         setStep(4); // Task strike
-        await new Promise((r) => setTimeout(r, 3500)); // Wait for all 3 tasks to strike (~1.4s) + 2 full seconds of pause
+        setTickCount(1); // First strike happens instantly
+        await new Promise((r) => setTimeout(r, 500));
+        if (!isMounted) break;
+        setTickCount(2); // Second strike (0.5s delay)
+        await new Promise((r) => setTimeout(r, 500));
+        if (!isMounted) break;
+        setTickCount(3); // Third strike (1.0s delay)
+        await new Promise((r) => setTimeout(r, 2500)); // Wait remaining 2.5s
         if (!isMounted) break;
         setStep(5); // Luxurious Flip
         await new Promise((r) => setTimeout(r, 1500));
@@ -282,7 +291,16 @@ export default function HeroAnimation() {
                   <span className="px-4 py-1.5 bg-white/10 border border-white/10 rounded-md text-xs font-bold text-white shadow-sm">
                     Today's task
                   </span>
-                  <span className="text-xs text-white/70 font-bold">1 / 10</span>
+                  <span className="text-xs text-white/70 font-bold">
+                    <motion.span 
+                      key={tickCount} 
+                      initial={{ opacity: 0, y: -5 }} 
+                      animate={{ opacity: 1, y: 0 }} 
+                      className="inline-block"
+                    >
+                      {tickCount}
+                    </motion.span> / 10
+                  </span>
                 </div>
                 <div className="text-xs text-blue-400 font-bold flex items-center gap-1.5 cursor-pointer group hover:text-blue-300 transition-colors">
                   View all <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
