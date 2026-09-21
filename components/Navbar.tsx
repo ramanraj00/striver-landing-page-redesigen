@@ -53,7 +53,7 @@ const Navbar = () => {
 
       {/* Center: Navigation Links */}
       <div 
-        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden md:flex items-center gap-1 bg-zinc-900/90 backdrop-blur-md border border-zinc-800/80 rounded-2xl p-1.5 shadow-lg"
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden md:flex items-center gap-1 bg-[#0A0A0C] backdrop-blur-md border border-white/[0.04] rounded-2xl p-1.5 shadow-lg"
         onMouseLeave={() => setHoveredTab(null)}
       >
         {TABS.map((tab) => {
@@ -77,7 +77,7 @@ const Navbar = () => {
               {isBackgroundActive && (
                 <motion.div
                   layoutId="nav-pill"
-                  className="absolute inset-0 bg-zinc-800 rounded-xl shadow-[0_2px_10px_rgba(0,0,0,0.4)] border border-zinc-700/50"
+                  className="absolute inset-0 bg-[#16161A] rounded-xl border border-white/[0.03]"
                   transition={{ 
                     type: "spring", 
                     bounce: 0.05, 
@@ -203,7 +203,7 @@ const Navbar = () => {
       <div className="flex items-center">
         <Link 
           href="#" 
-          className="group flex items-center gap-1.5 px-5 py-2.5 bg-zinc-100 hover:bg-white text-zinc-950 text-sm font-medium rounded-xl transition-all shadow-sm"
+          className="group flex items-center gap-1.5 px-5 py-2.5 bg-gradient-to-b from-[#3E7BFA] to-[#225AD2] hover:from-[#4C86FC] hover:to-[#2762DB] text-white text-sm font-medium rounded-xl transition-all shadow-[inset_0_1px_1px_rgba(255,255,255,0.25)]"
         >
           Get Started
           <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
