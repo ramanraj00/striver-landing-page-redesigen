@@ -147,11 +147,11 @@ export default function HeroAnimation() {
           {/* FRONT FACE (Planly UI) */}
           {/* ======================= */}
           <motion.div 
-            initial={{ visibility: "visible", z: 1 }}
-            animate={{ visibility: step === 6 ? "hidden" : "visible", z: 1 }}
+            initial={{ visibility: "visible" }}
+            animate={{ visibility: step === 6 ? "hidden" : "visible" }}
             transition={{ duration: 0 }}
             className="absolute inset-0 w-full h-full" 
-            style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", transformStyle: "preserve-3d", WebkitTransformStyle: "preserve-3d" }}
+            style={{ transform: "translateZ(1px)", backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", transformStyle: "preserve-3d", WebkitTransformStyle: "preserve-3d" }}
           >
             {/* Layer 0: Base Shell */}
             <motion.div
@@ -278,11 +278,11 @@ export default function HeroAnimation() {
           {/* BACK FACE (TUFY UI) */}
           {/* ======================= */}
           <motion.div 
-            initial={{ rotateY: 180, visibility: "hidden", z: 1 }}
-            animate={{ visibility: (step >= 5) ? "visible" : "hidden", z: 1 }}
+            initial={{ visibility: "hidden" }}
+            animate={{ visibility: (step >= 5) ? "visible" : "hidden" }}
             transition={{ duration: 0 }}
             className="absolute inset-0 w-full h-full" 
-            style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", transformStyle: "preserve-3d", WebkitTransformStyle: "preserve-3d" }}
+            style={{ transform: "rotateY(180deg) translateZ(1px)", backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", transformStyle: "preserve-3d", WebkitTransformStyle: "preserve-3d" }}
           >
             
             {/* Base Background with mathematically inverted shadow so it casts left relative to the scene after rotating */}
