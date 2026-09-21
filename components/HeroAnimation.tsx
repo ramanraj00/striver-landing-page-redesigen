@@ -147,6 +147,9 @@ export default function HeroAnimation() {
           {/* FRONT FACE (Planly UI) */}
           {/* ======================= */}
           <motion.div 
+            initial={{ visibility: "visible" }}
+            animate={{ visibility: step === 6 ? "hidden" : "visible" }}
+            transition={{ duration: 0 }}
             className="absolute inset-0 w-full h-full" 
             style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", transformStyle: "preserve-3d", WebkitTransformStyle: "preserve-3d" }}
           >
@@ -275,7 +278,9 @@ export default function HeroAnimation() {
           {/* BACK FACE (TUFY UI) */}
           {/* ======================= */}
           <motion.div 
-            initial={{ rotateY: 180 }}
+            initial={{ rotateY: 180, visibility: "hidden" }}
+            animate={{ visibility: (step >= 5) ? "visible" : "hidden" }}
+            transition={{ duration: 0 }}
             className="absolute inset-0 w-full h-full" 
             style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", transformStyle: "preserve-3d", WebkitTransformStyle: "preserve-3d" }}
           >
