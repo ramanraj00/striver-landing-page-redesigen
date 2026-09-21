@@ -175,11 +175,11 @@ export default function HeroAnimation() {
             <motion.div
               initial={{ z: 0, y: 10, opacity: 0, x: 0, scale: 0.9, height: 300 }}
               animate={{ 
-                z: step >= 3 ? 30 : (step >= 1 ? 40 : 0), 
+                z: (step >= 3 && step <= 5) ? 30 : ((step >= 1 && step <= 5) ? 40 : 0), 
                 y: step >= 3 ? 0 : (step >= 1 ? 0 : 10), 
                 x: step >= 3 ? 12 : 0,
                 height: step >= 3 ? 280 : 300, 
-                opacity: step >= 1 ? 1 : 0,
+                opacity: (step >= 1 && step <= 5) ? 1 : 0,
                 scale: 1
               }}
               transition={smoothTransition}
@@ -231,9 +231,9 @@ export default function HeroAnimation() {
             <motion.div
               initial={{ z: 60, y: 10, opacity: 0, x: 0, scale: 0.9 }}
               animate={{ 
-                z: 60, 
+                z: (step >= 3 && step <= 5) ? 60 : 0, 
                 y: step >= 3 ? 0 : 10, 
-                opacity: step >= 3 ? 1 : 0,
+                opacity: (step >= 3 && step <= 5) ? 1 : 0,
                 x: 0,
                 scale: 1
               }}
