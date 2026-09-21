@@ -307,9 +307,13 @@ export default function HeroAnimation() {
             <div className="relative w-full h-full p-9 flex flex-col">
               
               <div className="flex-shrink-0">
-                <h3 className="text-3xl font-extrabold text-white mb-2 tracking-wide">TUFY to help you</h3>
-                <p className="text-white/60 text-[15px] leading-relaxed max-w-[95%]">
-                  Built into every surface — lessons, practice, submissions and reviews.
+                <h3 className="text-3xl font-extrabold text-white mb-3 tracking-wide">TUFY to help you</h3>
+                <p className="text-white/70 text-[15px] leading-relaxed max-w-[95%]">
+                  Built into every surface —{' '}
+                  <span className="text-[#4F84F6] font-semibold bg-[#4F84F6]/15 px-1.5 py-0.5 rounded-md border border-[#4F84F6]/20 shadow-sm">lessons</span>,{' '}
+                  <span className="text-[#4F84F6] font-semibold bg-[#4F84F6]/15 px-1.5 py-0.5 rounded-md border border-[#4F84F6]/20 shadow-sm">practice</span>,{' '}
+                  <span className="text-[#4F84F6] font-semibold bg-[#4F84F6]/15 px-1.5 py-0.5 rounded-md border border-[#4F84F6]/20 shadow-sm">submissions</span> and{' '}
+                  <span className="text-[#4F84F6] font-semibold bg-[#4F84F6]/15 px-1.5 py-0.5 rounded-md border border-[#4F84F6]/20 shadow-sm">reviews</span>.
                 </p>
               </div>
 
@@ -377,7 +381,7 @@ export default function HeroAnimation() {
                 scale: (step === 6 || step === 7) ? 1 : 0.8 
               }}
               transition={{ type: "spring", stiffness: 100, damping: 15, delay: step === 6 ? 0.6 : 0 }}
-              className="absolute -bottom-6 -right-6 w-[170px] h-[170px] z-50 pointer-events-none"
+              className="absolute -bottom-3 -right-4 w-[135px] h-[135px] z-50 pointer-events-none"
             >
               {/* Using the newly uploaded laptop mascot */}
               <img src="/tufy-laptop.png" alt="TUFY Mascot" className="w-full h-full object-contain drop-shadow-2xl" />
