@@ -121,7 +121,7 @@ export default function HeroAnimation() {
       
       {/* 3D Isometric Camera Container (Stays Static, holds the camera angle) */}
       <motion.div
-        style={{ transformStyle: "preserve-3d", WebkitTransformStyle: "preserve-3d" }}
+        style={{ transformStyle: "preserve-3d", WebkitTransformStyle: "preserve-3d", willChange: "transform" }}
         initial={{ rotateX: 20, rotateY: -20, rotateZ: 5 }}
         animate={{ rotateX: 20, rotateY: -20, rotateZ: 5 }}
         className="relative w-[460px] h-[470px]"
@@ -130,7 +130,7 @@ export default function HeroAnimation() {
         {/* The Flipper Container (Spins perfectly inside the 3D space) */}
         <motion.div
           className="absolute inset-0 w-full h-full"
-          style={{ transformStyle: "preserve-3d", WebkitTransformStyle: "preserve-3d" }}
+          style={{ transformStyle: "preserve-3d", WebkitTransformStyle: "preserve-3d", willChange: "transform" }}
           initial={{ rotateY: 0 }}
           animate={{
             rotateY: (step === 5 || step === 6) ? 180 : 0,
@@ -364,7 +364,7 @@ export default function HeroAnimation() {
                       </div>
                       <div className="w-7 h-7 rounded-full bg-[#1F2937] border border-white/20 flex items-center justify-center overflow-hidden ml-1">
                         {/* Tiny TUFY Face inside the circle */}
-                        <img src="/tufy.png" alt="TUFY Profile" className="w-full h-full object-cover scale-150 translate-y-1" />
+                        <img loading="eager" fetchpriority="high" src="/tufy.png" alt="TUFY Profile" className="w-full h-full object-cover scale-150 translate-y-1" />
                       </div>
                     </div>
                   </motion.div>
@@ -384,12 +384,10 @@ export default function HeroAnimation() {
               className="absolute -bottom-3 -right-4 w-[135px] h-[135px] z-50 pointer-events-none"
             >
               {/* Using the newly uploaded laptop mascot */}
-              <motion.img 
+              <img loading="eager" fetchpriority="high" 
                 src="/tufy-laptop.png" 
                 alt="TUFY Mascot" 
-                className="w-full h-full object-contain drop-shadow-2xl origin-bottom" 
-                animate={{ y: [0, -3, 0] }}
-                transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+                className="w-full h-full object-contain " 
               />
             </motion.div>
 
