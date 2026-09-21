@@ -101,6 +101,11 @@ export default function HeroAnimation() {
         if (!isMounted) break;
         setStep(6); // TUFY Animations
         await new Promise((r) => setTimeout(r, 4500));
+        if (!isMounted) break;
+        setStep(7); // Luxurious Flip Back
+        await new Promise((r) => setTimeout(r, 1500));
+        if (!isMounted) break;
+        // Loop repeats back to step 0
       }
     };
     runSequence();
@@ -128,9 +133,9 @@ export default function HeroAnimation() {
           style={{ transformStyle: "preserve-3d", WebkitTransformStyle: "preserve-3d" }}
           initial={{ rotateY: 0 }}
           animate={{
-            rotateY: step >= 5 ? 180 : 0,
-            z: step === 5 ? 50 : 0, // Pushes forward ONLY during the flip step
-            scale: step === 5 ? 1.05 : 1
+            rotateY: (step === 5 || step === 6) ? 180 : 0,
+            z: (step === 5 || step === 7) ? 50 : 0, // Pushes forward ONLY during the flip turns
+            scale: (step === 5 || step === 7) ? 1.05 : 1
           }}
           transition={{
             duration: 1.4,
@@ -298,8 +303,8 @@ export default function HeroAnimation() {
                 {/* Floating Search/Stats Bar */}
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: step >= 6 ? 1 : 0, y: step >= 6 ? 0 : 30 }}
-                  transition={{ duration: 0.6, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                  animate={{ opacity: step === 6 ? 1 : 0, y: step === 6 ? 0 : 30 }}
+                  transition={{ duration: 0.6, delay: step === 6 ? 0.4 : 0, ease: [0.16, 1, 0.3, 1] }}
                   className="w-[90%] h-12 bg-[#0B0E14] border border-white/10 rounded-full flex items-center justify-between px-4 shadow-[0_10px_30px_rgba(0,0,0,0.5)] z-20"
                 >
                   <div className="flex items-center gap-2 text-white/50">
@@ -330,11 +335,11 @@ export default function HeroAnimation() {
             <motion.div
               initial={{ opacity: 0, y: 60, scale: 0.8 }}
               animate={{ 
-                opacity: step >= 6 ? 1 : 0, 
-                y: step >= 6 ? 0 : 60, 
-                scale: step >= 6 ? 1 : 0.8 
+                opacity: step === 6 ? 1 : 0, 
+                y: step === 6 ? 0 : 60, 
+                scale: step === 6 ? 1 : 0.8 
               }}
-              transition={{ type: "spring", stiffness: 100, damping: 15, delay: 0.6 }}
+              transition={{ type: "spring", stiffness: 100, damping: 15, delay: step === 6 ? 0.6 : 0 }}
               className="absolute -bottom-6 -right-6 w-[170px] h-[170px] z-50 pointer-events-none"
             >
               {/* Using the newly uploaded laptop mascot */}
