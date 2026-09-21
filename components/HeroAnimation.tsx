@@ -290,44 +290,58 @@ export default function HeroAnimation() {
                 </p>
               </div>
 
-              {/* IDE Dummy Window */}
-              <div className="mt-6 flex-1 w-full bg-gradient-to-b from-[#1C2128] to-[#0D1117] rounded-[16px] border-[1.5px] border-white/5 relative flex flex-col items-center justify-end pb-8 shadow-inner overflow-hidden">
+              {/* IDE Dummy Window with Wooden Scroll */}
+              <div className="mt-6 flex-1 w-full bg-[#080A0F] rounded-[16px] border-[1.5px] border-white/10 relative shadow-[inset_0_10px_20px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col">
                 
-                {/* IDE Top Bar */}
-                <div className="absolute top-0 left-0 w-full h-8 border-b border-white/5 flex items-center px-4 gap-1.5 bg-white/[0.02]">
+                {/* IDE Top Bar (Fixed at top) */}
+                <div className="relative w-full h-8 border-b border-white/5 flex items-center px-4 gap-1.5 bg-white/[0.02] z-40">
                   <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
                   <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
                   <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
                 </div>
 
-                {/* Floating Search/Stats Bar */}
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: step === 6 ? 1 : 0, y: step === 6 ? 0 : 30 }}
-                  transition={{ duration: 0.6, delay: step === 6 ? 0.4 : 0, ease: [0.16, 1, 0.3, 1] }}
-                  className="w-[90%] h-12 bg-[#0B0E14] border border-white/10 rounded-full flex items-center justify-between px-4 shadow-[0_10px_30px_rgba(0,0,0,0.5)] z-20"
-                >
-                  <div className="flex items-center gap-2 text-white/50">
-                    <Search className="w-[18px] h-[18px]" />
-                    <Sparkles className="w-3.5 h-3.5" />
-                  </div>
-                  
-                  <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-1.5">
-                      <span className="text-[14px]">🪙</span>
-                      <span className="text-white text-xs font-bold tracking-wide">240</span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <span className="text-[14px]">🔥</span>
-                      <span className="text-white text-xs font-bold tracking-wide">12</span>
-                    </div>
-                    <div className="w-7 h-7 rounded-full bg-[#1F2937] border border-white/20 flex items-center justify-center overflow-hidden ml-1">
-                      {/* Tiny TUFY Face inside the circle */}
-                      <img src="/tufy.png" alt="TUFY Profile" className="w-full h-full object-cover scale-150 translate-y-1" />
-                    </div>
-                  </div>
-                </motion.div>
+                {/* Wooden Roller Rod (Fixed just below top bar) */}
+                <div className="absolute top-[32px] left-2 right-2 h-[14px] rounded-full bg-gradient-to-b from-[#8b5a2b] via-[#a0522d] to-[#4a2311] shadow-[0_5px_15px_rgba(0,0,0,0.9),inset_0_2px_2px_rgba(255,255,255,0.3),inset_0_-2px_4px_rgba(0,0,0,0.5)] z-30 border border-[#3e1d04]">
+                   {/* End caps */}
+                   <div className="absolute left-0 w-1.5 h-full bg-[#2a1302] rounded-l-full opacity-80" />
+                   <div className="absolute right-0 w-1.5 h-full bg-[#2a1302] rounded-r-full opacity-80" />
+                </div>
 
+                {/* The Unrolling Canvas */}
+                <motion.div
+                  initial={{ clipPath: "inset(0% 0% 100% 0%)" }}
+                  animate={{ clipPath: step === 6 ? "inset(0% 0% 0% 0%)" : "inset(0% 0% 100% 0%)" }}
+                  transition={{ duration: 1.0, delay: step === 6 ? 0.2 : 0, ease: [0.25, 1, 0.5, 1] }}
+                  className="absolute top-[39px] left-4 right-4 bottom-4 bg-gradient-to-b from-[#1C2128] to-[#12161E] rounded-b-[12px] shadow-[0_10px_20px_rgba(0,0,0,0.5)] z-20 flex flex-col items-center justify-end pb-4"
+                >
+                  {/* Floating Search/Stats Bar */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: step === 6 ? 1 : 0, y: step === 6 ? 0 : 30 }}
+                    transition={{ duration: 0.6, delay: step === 6 ? 0.9 : 0, ease: [0.16, 1, 0.3, 1] }}
+                    className="w-[90%] h-12 bg-[#0B0E14] border border-white/10 rounded-full flex items-center justify-between px-4 shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
+                  >
+                    <div className="flex items-center gap-2 text-white/50">
+                      <Search className="w-[18px] h-[18px]" />
+                      <Sparkles className="w-3.5 h-3.5" />
+                    </div>
+                    
+                    <div className="flex items-center gap-4">
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-[14px]">🪙</span>
+                        <span className="text-white text-xs font-bold tracking-wide">240</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-[14px]">🔥</span>
+                        <span className="text-white text-xs font-bold tracking-wide">12</span>
+                      </div>
+                      <div className="w-7 h-7 rounded-full bg-[#1F2937] border border-white/20 flex items-center justify-center overflow-hidden ml-1">
+                        {/* Tiny TUFY Face inside the circle */}
+                        <img src="/tufy.png" alt="TUFY Profile" className="w-full h-full object-cover scale-150 translate-y-1" />
+                      </div>
+                    </div>
+                  </motion.div>
+                </motion.div>
               </div>
             </div>
 
