@@ -100,12 +100,15 @@ export default function HeroAnimation() {
         await new Promise((r) => setTimeout(r, 1500));
         if (!isMounted) break;
         setStep(6); // TUFY Slide 1 (Roller)
-        await new Promise((r) => setTimeout(r, 2000));
+        await new Promise((r) => setTimeout(r, 1800));
         if (!isMounted) break;
         setStep(7); // TUFY Slide 2 (Code Editor)
-        await new Promise((r) => setTimeout(r, 3500));
+        await new Promise((r) => setTimeout(r, 2500));
         if (!isMounted) break;
-        setStep(8); // Luxurious Flip Back
+        setStep(8); // TUFY Slide 3 (Chat UI)
+        await new Promise((r) => setTimeout(r, 3000));
+        if (!isMounted) break;
+        setStep(9); // Luxurious Flip Back
         await new Promise((r) => setTimeout(r, 1500));
         if (!isMounted) break;
         // Loop repeats back to step 0
@@ -136,15 +139,15 @@ export default function HeroAnimation() {
           style={{ transformStyle: "preserve-3d", WebkitTransformStyle: "preserve-3d", willChange: "transform" }}
           initial={{ rotateY: 0 }}
           animate={{
-            rotateY: (step >= 5 && step <= 7) ? 180 : 0,
-            z: (step === 5 || step === 8) ? 50 : 0, // Pushes forward ONLY during the flip turns
-            scale: (step === 5 || step === 8) ? 1.05 : 1
+            rotateY: (step >= 5 && step <= 8) ? 180 : 0,
+            z: (step === 5 || step === 9) ? 50 : 0, // Pushes forward ONLY during the flip turns
+            scale: (step === 5 || step === 9) ? 1.05 : 1
           }}
           transition={{
             rotateY: { duration: 1.4, ease: [0.25, 1, 0.5, 1] },
             default: { 
-              duration: (step === 5 || step === 8) ? 1.4 : 0.4, 
-              ease: (step === 5 || step === 8) ? [0.25, 1, 0.5, 1] : "easeOut" 
+              duration: (step === 5 || step === 9) ? 1.4 : 0.4, 
+              ease: (step === 5 || step === 9) ? [0.25, 1, 0.5, 1] : "easeOut" 
             }
           }}
         >
@@ -154,7 +157,7 @@ export default function HeroAnimation() {
           {/* ======================= */}
           <motion.div 
             initial={{ visibility: "visible" }}
-            animate={{ visibility: (step === 6 || step === 7) ? "hidden" : "visible" }}
+            animate={{ visibility: (step >= 6 && step <= 8) ? "hidden" : "visible" }}
             transition={{ duration: 0 }}
             className="absolute inset-0 w-full h-full" 
             style={{ transform: "translateZ(1px)", backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", transformStyle: "preserve-3d", WebkitTransformStyle: "preserve-3d" }}
@@ -300,7 +303,7 @@ export default function HeroAnimation() {
           {/* ======================= */}
           <motion.div 
             initial={{ visibility: "hidden" }}
-            animate={{ visibility: (step >= 5 && step <= 8) ? "visible" : "hidden" }}
+            animate={{ visibility: (step >= 5 && step <= 9) ? "visible" : "hidden" }}
             transition={{ duration: 0 }}
             className="absolute inset-0 w-full h-full" 
             style={{ transform: "rotateY(180deg) translateZ(1px)", backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", transformStyle: "preserve-3d", WebkitTransformStyle: "preserve-3d" }}
@@ -330,9 +333,9 @@ export default function HeroAnimation() {
                 <motion.div
                   initial={{ x: 0 }}
                   animate={{ 
-                    x: (step === 7 || step === 8) ? -400 : 0
+                    x: (step >= 8) ? -800 : (step === 7 ? -400 : 0)
                   }}
-                  transition={{ duration: step === 0 ? 0 : 0.8, ease: [0.32, 0.72, 0, 1] }}
+                  transition={{ duration: step === 0 ? 0 : 0.5, ease: [0.25, 1, 0.5, 1] }}
                   className="absolute inset-0 w-full h-full bg-[#080A0F] border-[1.5px] border-white/10 overflow-hidden flex flex-col rounded-[16px]"
                 >
                   {/* IDE Top Bar (Fixed at top) */}
@@ -390,9 +393,9 @@ export default function HeroAnimation() {
                 <motion.div
                   initial={{ x: 400 }}
                   animate={{ 
-                    x: (step === 7 || step === 8) ? 0 : 400
+                    x: (step >= 8) ? -400 : (step === 7 ? 0 : 400)
                   }}
-                  transition={{ duration: step === 0 ? 0 : 0.8, ease: [0.32, 0.72, 0, 1] }}
+                  transition={{ duration: step === 0 ? 0 : 0.5, ease: [0.25, 1, 0.5, 1] }}
                   className="absolute inset-0 w-full h-full bg-[#0A0D14] border-[1.5px] border-white/10 overflow-hidden flex flex-col rounded-[16px] shadow-[inset_0_10px_20px_rgba(0,0,0,0.4)]"
                 >
                   {/* IDE Top Bar (Tabs) */}
@@ -458,6 +461,49 @@ export default function HeroAnimation() {
                      </div>
                   </div>
                 </motion.div>
+
+                {/* SLIDE 3: Chat UI */}
+                <motion.div
+                  initial={{ x: 400 }}
+                  animate={{ 
+                    x: (step >= 9) ? -400 : (step === 8 ? 0 : 400)
+                  }}
+                  transition={{ duration: step === 0 ? 0 : 0.5, ease: [0.25, 1, 0.5, 1] }}
+                  className="absolute inset-0 w-full h-full bg-[#12151C] border-[1.5px] border-white/10 overflow-hidden flex flex-col rounded-[16px] p-3"
+                >
+                  {/* Top Bar */}
+                  <div className="flex items-center justify-between text-white/70 text-[11px] font-medium px-2 py-1">
+                    <div className="flex items-center gap-1.5 cursor-pointer">
+                      New chat <span className="text-[14px] leading-none">+</span>
+                    </div>
+                    <span className="text-[14px] cursor-pointer">×</span>
+                  </div>
+
+                  {/* Center Tufy */}
+                  <div className="flex-1 flex flex-col items-center justify-center -mt-6 relative">
+                    <img loading="eager" fetchpriority="high" src="/tufy.png" alt="Tufy" className="w-[70px] h-[70px] object-contain drop-shadow-lg" />
+                    <p className="text-white/80 text-[12px] font-medium mt-3">Hey, I'm Tufy.</p>
+                  </div>
+
+                  {/* Chat Input */}
+                  <div className="w-full bg-[#080A0F] border border-white/10 rounded-[12px] p-3 flex flex-col gap-2 relative z-10">
+                    {/* Pill */}
+                    <div className="flex items-center gap-1 w-max px-2 py-1 bg-[#1E293B]/60 border border-[#334155] rounded-md text-[#60A5FA] text-[10px] font-medium">
+                      <span className="text-[10px]">📄</span> Problem <span className="ml-1 text-white/40 cursor-pointer hover:text-white/80">×</span>
+                    </div>
+                    {/* Placeholder */}
+                    <div className="flex items-center gap-2 text-white/30 text-[11px] font-mono mt-1">
+                      <span>⇧</span> <span>↵</span> <span>to insert a line break</span>
+                    </div>
+                    {/* Bottom row icons */}
+                    <div className="flex items-center justify-between mt-4">
+                      <span className="text-white/40 text-[14px] font-mono">@</span>
+                      <div className="w-6 h-6 rounded-md bg-white/10 flex items-center justify-center cursor-pointer">
+                        <span className="text-white/60 text-[10px]">▶</span>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
               </div>
             </div>
 
@@ -465,9 +511,9 @@ export default function HeroAnimation() {
             <motion.div
               initial={{ opacity: 0, y: 60, scale: 0.8 }}
               animate={{ 
-                opacity: (step === 6 || step === 7) ? 1 : 0, 
-                y: (step === 6 || step === 7) ? 0 : 60, 
-                scale: (step === 6 || step === 7) ? 1 : 0.8 
+                opacity: (step >= 6 && step <= 8) ? 1 : 0, 
+                y: (step >= 6 && step <= 8) ? 0 : 60, 
+                scale: (step >= 6 && step <= 8) ? 1 : 0.8 
               }}
               transition={{ type: "spring", stiffness: 100, damping: 15, delay: step === 6 ? 0.6 : 0 }}
               className="absolute -bottom-3 -right-4 w-[135px] h-[135px] z-50 pointer-events-none"
