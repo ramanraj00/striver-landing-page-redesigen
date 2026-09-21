@@ -99,10 +99,13 @@ export default function HeroAnimation() {
         setStep(5); // Luxurious Flip
         await new Promise((r) => setTimeout(r, 1500));
         if (!isMounted) break;
-        setStep(6); // TUFY Animations
-        await new Promise((r) => setTimeout(r, 4500));
+        setStep(6); // TUFY Slide 1 (Roller)
+        await new Promise((r) => setTimeout(r, 2000));
         if (!isMounted) break;
-        setStep(7); // Luxurious Flip Back
+        setStep(7); // TUFY Slide 2 (Code Editor)
+        await new Promise((r) => setTimeout(r, 3500));
+        if (!isMounted) break;
+        setStep(8); // Luxurious Flip Back
         await new Promise((r) => setTimeout(r, 1500));
         if (!isMounted) break;
         // Loop repeats back to step 0
@@ -133,15 +136,15 @@ export default function HeroAnimation() {
           style={{ transformStyle: "preserve-3d", WebkitTransformStyle: "preserve-3d", willChange: "transform" }}
           initial={{ rotateY: 0 }}
           animate={{
-            rotateY: (step === 5 || step === 6) ? 180 : 0,
-            z: (step === 5 || step === 7) ? 50 : 0, // Pushes forward ONLY during the flip turns
-            scale: (step === 5 || step === 7) ? 1.05 : 1
+            rotateY: (step >= 5 && step <= 7) ? 180 : 0,
+            z: (step === 5 || step === 8) ? 50 : 0, // Pushes forward ONLY during the flip turns
+            scale: (step === 5 || step === 8) ? 1.05 : 1
           }}
           transition={{
             rotateY: { duration: 1.4, ease: [0.25, 1, 0.5, 1] },
             default: { 
-              duration: (step === 5 || step === 7) ? 1.4 : 0.4, 
-              ease: (step === 5 || step === 7) ? [0.25, 1, 0.5, 1] : "easeOut" 
+              duration: (step === 5 || step === 8) ? 1.4 : 0.4, 
+              ease: (step === 5 || step === 8) ? [0.25, 1, 0.5, 1] : "easeOut" 
             }
           }}
         >
@@ -151,7 +154,7 @@ export default function HeroAnimation() {
           {/* ======================= */}
           <motion.div 
             initial={{ visibility: "visible" }}
-            animate={{ visibility: step === 6 ? "hidden" : "visible" }}
+            animate={{ visibility: (step === 6 || step === 7) ? "hidden" : "visible" }}
             transition={{ duration: 0 }}
             className="absolute inset-0 w-full h-full" 
             style={{ transform: "translateZ(1px)", backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", transformStyle: "preserve-3d", WebkitTransformStyle: "preserve-3d" }}
@@ -297,7 +300,7 @@ export default function HeroAnimation() {
           {/* ======================= */}
           <motion.div 
             initial={{ visibility: "hidden" }}
-            animate={{ visibility: (step >= 5) ? "visible" : "hidden" }}
+            animate={{ visibility: (step >= 5 && step <= 8) ? "visible" : "hidden" }}
             transition={{ duration: 0 }}
             className="absolute inset-0 w-full h-full" 
             style={{ transform: "rotateY(180deg) translateZ(1px)", backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", transformStyle: "preserve-3d", WebkitTransformStyle: "preserve-3d" }}
@@ -320,57 +323,143 @@ export default function HeroAnimation() {
                 </p>
               </div>
 
-              {/* IDE Dummy Window with Wooden Scroll */}
-              <div className="mt-6 flex-1 w-full bg-[#080A0F] rounded-[16px] border-[1.5px] border-white/10 relative shadow-[inset_0_10px_20px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col">
+              {/* CAROUSEL CONTAINER */}
+              <div className="mt-6 flex-1 w-full relative overflow-hidden rounded-[16px]">
                 
-                {/* IDE Top Bar (Fixed at top) */}
-                <div className="relative w-full h-8 border-b border-white/5 flex items-center px-4 gap-1.5 bg-white/[0.02] z-40">
-                  <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
-                </div>
-
-                {/* Wooden Roller Rod (Fixed just below top bar) */}
-                <div className="absolute top-[32px] left-2 right-2 h-[14px] rounded-full bg-gradient-to-b from-[#8b5a2b] via-[#a0522d] to-[#4a2311] shadow-[0_5px_15px_rgba(0,0,0,0.9),inset_0_2px_2px_rgba(255,255,255,0.3),inset_0_-2px_4px_rgba(0,0,0,0.5)] z-30 border border-[#3e1d04]">
-                   {/* End caps */}
-                   <div className="absolute left-0 w-1.5 h-full bg-[#2a1302] rounded-l-full opacity-80" />
-                   <div className="absolute right-0 w-1.5 h-full bg-[#2a1302] rounded-r-full opacity-80" />
-                </div>
-
-                {/* The Unrolling Canvas */}
+                {/* SLIDE 1: Roller IDE */}
                 <motion.div
-                  initial={{ clipPath: "inset(0% 0% 100% 0%)" }}
-                  animate={{ clipPath: (step === 6 || step === 7) ? "inset(0% 0% 0% 0%)" : "inset(0% 0% 100% 0%)" }}
-                  transition={{ duration: 1.0, delay: step === 6 ? 0.2 : 0, ease: [0.25, 1, 0.5, 1] }}
-                  className="absolute top-[39px] left-4 right-4 bottom-4 bg-gradient-to-b from-[#1C2128] to-[#12161E] rounded-b-[12px] shadow-[0_10px_20px_rgba(0,0,0,0.5)] z-20 flex flex-col items-center justify-end pb-4"
+                  animate={{ 
+                    x: (step >= 7) ? -400 : 0, 
+                    opacity: (step >= 7) ? 0 : 1 
+                  }}
+                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                  className="absolute inset-0 w-full h-full bg-[#080A0F] border-[1.5px] border-white/10 overflow-hidden flex flex-col rounded-[16px]"
+                  style={{ willChange: "transform, opacity" }}
                 >
-                  {/* Floating Search/Stats Bar */}
+                  {/* IDE Top Bar (Fixed at top) */}
+                  <div className="relative w-full h-8 border-b border-white/5 flex items-center px-4 gap-1.5 bg-white/[0.02] z-40">
+                    <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
+                  </div>
+
+                  {/* Wooden Roller Rod (Fixed just below top bar) */}
+                  <div className="absolute top-[32px] left-2 right-2 h-[14px] rounded-full bg-gradient-to-b from-[#8b5a2b] via-[#a0522d] to-[#4a2311] shadow-[0_5px_15px_rgba(0,0,0,0.9),inset_0_2px_2px_rgba(255,255,255,0.3),inset_0_-2px_4px_rgba(0,0,0,0.5)] z-30 border border-[#3e1d04]">
+                     {/* End caps */}
+                     <div className="absolute left-0 w-1.5 h-full bg-[#2a1302] rounded-l-full opacity-80" />
+                     <div className="absolute right-0 w-1.5 h-full bg-[#2a1302] rounded-r-full opacity-80" />
+                  </div>
+
+                  {/* The Unrolling Canvas */}
                   <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: (step === 6 || step === 7) ? 1 : 0, y: (step === 6 || step === 7) ? 0 : 30 }}
-                    transition={{ duration: 0.6, delay: step === 6 ? 0.9 : 0, ease: [0.16, 1, 0.3, 1] }}
-                    className="w-[90%] h-12 bg-[#0B0E14] border border-white/10 rounded-full flex items-center justify-between px-4 shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
+                    initial={{ clipPath: "inset(0% 0% 100% 0%)" }}
+                    animate={{ clipPath: (step === 6 || step === 7 || step === 8) ? "inset(0% 0% 0% 0%)" : "inset(0% 0% 100% 0%)" }}
+                    transition={{ duration: 1.0, delay: step === 6 ? 0.2 : 0, ease: [0.25, 1, 0.5, 1] }}
+                    className="absolute top-[39px] left-4 right-4 bottom-4 bg-gradient-to-b from-[#1C2128] to-[#12161E] rounded-b-[12px] shadow-[0_10px_20px_rgba(0,0,0,0.5)] z-20 flex flex-col items-center justify-end pb-4"
                   >
-                    <div className="flex items-center gap-2 text-white/50">
-                      <Search className="w-[18px] h-[18px]" />
-                      <Sparkles className="w-3.5 h-3.5" />
-                    </div>
-                    
-                    <div className="flex items-center gap-4">
-                      <div className="flex items-center gap-1.5">
-                        <span className="text-[14px]">🪙</span>
-                        <span className="text-white text-xs font-bold tracking-wide">240</span>
+                    {/* Floating Search/Stats Bar */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 30 }}
+                      animate={{ opacity: (step === 6 || step === 7 || step === 8) ? 1 : 0, y: (step === 6 || step === 7 || step === 8) ? 0 : 30 }}
+                      transition={{ duration: 0.6, delay: step === 6 ? 0.9 : 0, ease: [0.16, 1, 0.3, 1] }}
+                      className="w-[90%] h-12 bg-[#0B0E14] border border-white/10 rounded-full flex items-center justify-between px-4 shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
+                    >
+                      <div className="flex items-center gap-2 text-white/50">
+                        <Search className="w-[18px] h-[18px]" />
+                        <Sparkles className="w-3.5 h-3.5" />
                       </div>
-                      <div className="flex items-center gap-1.5">
-                        <span className="text-[14px]">🔥</span>
-                        <span className="text-white text-xs font-bold tracking-wide">12</span>
+                      
+                      <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-[14px]">🪙</span>
+                          <span className="text-white text-xs font-bold tracking-wide">240</span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-[14px]">🔥</span>
+                          <span className="text-white text-xs font-bold tracking-wide">12</span>
+                        </div>
+                        <div className="w-7 h-7 rounded-full bg-[#1F2937] border border-white/20 flex items-center justify-center overflow-hidden ml-1">
+                          {/* Tiny TUFY Face inside the circle */}
+                          <img loading="eager" fetchpriority="high" src="/tufy.png" alt="TUFY Profile" className="w-full h-full object-cover scale-150 translate-y-1" />
+                        </div>
                       </div>
-                      <div className="w-7 h-7 rounded-full bg-[#1F2937] border border-white/20 flex items-center justify-center overflow-hidden ml-1">
-                        {/* Tiny TUFY Face inside the circle */}
-                        <img loading="eager" fetchpriority="high" src="/tufy.png" alt="TUFY Profile" className="w-full h-full object-cover scale-150 translate-y-1" />
-                      </div>
-                    </div>
+                    </motion.div>
                   </motion.div>
+                </motion.div>
+
+                {/* SLIDE 2: Code Editor */}
+                <motion.div
+                  initial={{ x: 400, opacity: 0 }}
+                  animate={{ 
+                    x: (step >= 7) ? 0 : 400, 
+                    opacity: (step >= 7) ? 1 : 0 
+                  }}
+                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                  className="absolute inset-0 w-full h-full bg-[#0A0D14] border-[1.5px] border-white/10 overflow-hidden flex flex-col rounded-[16px] shadow-[inset_0_10px_20px_rgba(0,0,0,0.4)]"
+                  style={{ willChange: "transform, opacity" }}
+                >
+                  {/* IDE Top Bar (Tabs) */}
+                  <div className="relative w-full h-8 border-b border-white/5 flex items-end px-2 bg-[#06080A]">
+                     <div className="flex items-center gap-1.5 px-3 h-6 bg-[#080A0F] border-t border-l border-r border-white/5 rounded-t-[4px] text-[#4F84F6] text-[10px] font-semibold border-t-[#4F84F6]/50">
+                        Tab-1 <span className="text-white/40 hover:text-white/80 cursor-pointer">×</span>
+                     </div>
+                     <div className="flex items-center justify-center w-6 h-6 text-white/30 text-[10px] ml-1">+</div>
+                  </div>
+
+                  {/* Header (Controls) */}
+                  <div className="relative w-full h-10 border-b border-white/5 flex items-center justify-between px-3 bg-[#080A0F]">
+                     <div className="flex items-center gap-1 px-2 py-1 bg-white/5 rounded-[4px] text-white/80 text-[11px] font-mono border border-white/5">
+                        C++ <span className="text-[8px] text-white/40">▼</span>
+                     </div>
+                     <div className="flex items-center gap-2">
+                        <div className="w-6 h-6 rounded-[4px] bg-white/5 flex items-center justify-center border border-white/5">
+                           <span className="text-white/60 text-[8px]">▶</span>
+                        </div>
+                        <div className="flex items-center gap-1.5 px-2.5 py-1 bg-[#1A3B22] text-[#4ADE80] border border-[#4ADE80]/20 rounded-[4px] text-[11px] font-semibold shadow-sm">
+                           🚀 Submit
+                        </div>
+                        <div className="text-white/30 text-[14px] ml-1 tracking-widest leading-none">...</div>
+                     </div>
+                  </div>
+
+                  {/* Code Area */}
+                  <div className="flex-1 w-full relative bg-[#080A0F] flex pt-3 pb-8">
+                     {/* Line Numbers */}
+                     <div className="w-8 flex flex-col items-end pr-2 text-[11px] font-mono text-white/20 leading-[18px] select-none">
+                        1<br/>2<br/>3<br/>4<br/>5<br/>6<br/>7<br/>8<br/>9<br/>10
+                     </div>
+                     {/* Code */}
+                     <div className="flex-1 flex flex-col text-[11px] font-mono text-white/70 leading-[18px]">
+                        <div><span className="text-[#4F84F6]">int</span> majorityElement(<span className="text-[#4F84F6]">vector</span>&lt;<span className="text-[#4F84F6]">int</span>&gt;&amp; nums) {'{'}</div>
+                        <div className="pl-4"><span className="text-[#4F84F6]">int</span> count = <span className="text-[#FBBF24]">0</span>;</div>
+                        <div className="pl-4"><span className="text-[#4F84F6]">int</span> candidate = <span className="text-[#FBBF24]">0</span>;</div>
+                        <div className="pl-4"><span className="text-[#C084FC]">for</span> (<span className="text-[#4F84F6]">int</span> x : nums) {'{'}</div>
+                        <div className="pl-8"><span className="text-[#C084FC]">if</span> (count == <span className="text-[#FBBF24]">0</span>) candidate = x;</div>
+                        <div className="pl-8">count += (x == candidate) ? <span className="text-[#FBBF24]">1</span> : <span className="text-[#FBBF24]">-1</span>;</div>
+                        <div className="pl-4">{'}'}</div>
+                        <div className="pl-4"><span className="text-[#C084FC]">return</span> candidate;</div>
+                        <div>{'}'}</div>
+                     </div>
+
+                     {/* Stuck Here Button */}
+                     <div className="absolute bottom-3 right-3 px-3 py-1 bg-[#1F2937]/80 border border-white/20 rounded-full text-white/70 text-[10px] font-medium shadow-lg backdrop-blur-md">
+                        Stuck here?
+                     </div>
+                  </div>
+
+                  {/* Footer */}
+                  <div className="relative w-full h-8 border-t border-white/5 flex items-center justify-between px-3 bg-[#06080A]">
+                     <div className="flex items-center gap-3 text-[10px] font-medium">
+                        <span className="text-white/80">Test Case</span>
+                        <span className="text-[#4F84F6] relative">Sample<div className="absolute -bottom-[9px] left-0 right-0 h-[2px] bg-[#4F84F6] rounded-t-full"/></span>
+                        <span className="text-white/30">Hidden</span>
+                     </div>
+                     <div className="flex items-center gap-2">
+                        <div className="w-2.5 h-2.5 rounded-full border border-white/30 border-t-transparent -rotate-45" />
+                        <div className="w-2.5 h-2.5 border border-white/30 rounded-sm" />
+                        <div className="w-3 h-2.5 border-b-2 border-white/30 rounded-sm" />
+                     </div>
+                  </div>
                 </motion.div>
               </div>
             </div>
