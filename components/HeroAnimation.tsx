@@ -335,10 +335,10 @@ export default function HeroAnimation() {
                 scale: step >= 6 ? 1 : 0.8 
               }}
               transition={{ type: "spring", stiffness: 100, damping: 15, delay: 0.6 }}
-              className="absolute -bottom-8 -right-8 w-40 h-40 z-50 pointer-events-none"
+              className="absolute -bottom-6 -right-6 w-[170px] h-[170px] z-50 pointer-events-none"
             >
-              {/* Note: Ensure tufy.png is in your public folder! */}
-              <img src="/tufy.png" alt="TUFY Mascot" className="w-full h-full object-contain drop-shadow-2xl" />
+              {/* Using the newly uploaded laptop mascot */}
+              <img src="/tufy-laptop.png" alt="TUFY Mascot" className="w-full h-full object-contain drop-shadow-2xl" />
             </motion.div>
 
           </motion.div>
