@@ -167,25 +167,13 @@ export default function HeroAnimation() {
               <div className="absolute top-0 left-0 right-0 h-[160px] bg-gradient-to-b from-[#4F84F6]/10 to-transparent pointer-events-none" />
 
               <div className="flex-shrink-0">
-                <h3 className="text-4xl font-extrabold text-white mb-2.5 tracking-wide flex">
-                  {"Planly".split("").map((char, index) => (
-                    <motion.span
-                      key={index}
-                      initial={{ opacity: 0, y: 5 }}
-                      animate={{ 
-                        opacity: (step === 6 || step === 7) ? 0 : 1,
-                        y: (step === 6 || step === 7) ? 5 : 0
-                      }}
-                      transition={{ 
-                        duration: 0.2, 
-                        ease: "easeOut",
-                        delay: (step === 6 || step === 7) ? 0 : index * 0.08 
-                      }}
-                    >
-                      {char}
-                    </motion.span>
-                  ))}
-                </h3>
+                <motion.h3 
+                  animate={{ opacity: (step === 6 || step === 7) ? 0 : 1 }}
+                  transition={{ duration: (step === 6 || step === 7) ? 0 : 0.2 }}
+                  className="text-4xl font-extrabold text-white mb-2.5 tracking-wide"
+                >
+                  Planly
+                </motion.h3>
                 <motion.p 
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ 
